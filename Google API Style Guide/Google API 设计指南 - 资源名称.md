@@ -5,8 +5,6 @@
 * 翻译日期: 2月24日，2017
 * Copyright: Creative Commons Attribution 3.0 License
 
-In resource-oriented APIs, resources are named entities, and resource names are their identifiers. Each resource must have its own unique resource name. The resource name is made up of the ID of the resource itself, the IDs of any parent resources, and its API service name. We'll look at resource IDs and how a resource name is constructed below.
-
 在面向对象的API 里，资源是有名称的实体，资源名称是他们的标识符。每个资源必须有其独有的资源名。资源名称由资源本身的ID ，其父资源的ID 和API 服务名称组成。 我们将在下文中接触到资源ID 和一个资源名是如何构成的。
 
 gRPC API 应该使用无结构的URI 来用作资源名称。他们通常会遵从REST URL 的惯例并且其行为如同网络路径名称一样。他们可以轻易地被映射到REST URL上：在[标准方法](https://cloud.google.com/apis/design/standard_methods)一节可以看到更多细节。
@@ -39,13 +37,22 @@ API服务名称是用来让客户端定位API服务端点用的。对于仅内�
 
 ## 相对资源名
 
-A URI path (path-noscheme) without the leading "/". It identifies a resource within the API service. For example:
 一个省掉了最前的"/"的URI 路径[path-noscheme](http://tools.ietf.org/html/rfc3986#appendix-A)
 
 ```
 "shelves/shelf1/books/book2"
 ```
 ## 资源 ID
+
+一个将资源从它的父资源中识别出来的非空的URI组件([segment-nz-nc](http://tools.ietf.org/html/rfc3986#appendix-A))，可参考上面的例子。
+一个资源名称中的资源ID 可能由不止一个URI组件组成，如：
+
+| 集合ID | 资源ID |
+| --- | :-: |
+| files | <span class="Apple-tab-span" style="white-space:pre"></span>/source/py/parser.py |
+
+API服务应该尽可能地使用URL 友好的资源ID。 无论是由客户端还是服务器端分配，资源ID 必须被仔细地记录下来。举例来说，文件名称通常由客户端来指定，而email 消息ID 则通常是由服务器端来分配的。
+
 ## 集合 ID
 ## 资源名 vs URL
 ## 作为字符串的资源名
